@@ -31,6 +31,7 @@ export async function fetchCosmosImages(username: string, limit = 20): Promise<s
       ...html.matchAll(/cdn\.cosmos\.so\/((?:images\/)?[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/g),
     ];
 
+    // Collect ALL non-avatar image paths first
     const seen = new Set<string>();
     const paths: string[] = [];
     for (const [, path] of matches) {
@@ -38,12 +39,13 @@ export async function fetchCosmosImages(username: string, limit = 20): Promise<s
       if (id === AVATAR_ID || seen.has(id)) continue;
       seen.add(id);
       paths.push(path);
-      if (paths.length >= limit) break;
     }
 
-    // Page lists oldest→newest; return newest first
-    const ordered = paths.reverse();
-    return ordered.length > 0 ? ordered.map(cosmosUrl) : fallback();
+    if (paths.length === 0) return fallback();
+
+    // Page lists oldest→newest; reverse so index 0 = newest
+    const ordered = [...paths].reverse().slice(0, limit);
+    return ordered.map(cosmosUrl);
   } catch {
     return fallback();
   }

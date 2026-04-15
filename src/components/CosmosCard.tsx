@@ -1,19 +1,27 @@
 import { useEffect, useState } from "react";
 import { fetchCosmosImages, cosmosUrl } from "@/lib/cosmos";
 
-// Seed with a known good image so it renders immediately — no loading flash
-// Using the /images/ prefix format which most CDN images require
-const FIRST_IMAGE = cosmosUrl("images/d7f54426-79ba-472b-b50b-3803ca149879");
+// Fallback image (torii gate — confirmed valid CDN URL)
+const FALLBACK = cosmosUrl("images/d7f54426-79ba-472b-b50b-3803ca149879");
+const LS_KEY = "cosmos_latest_url";
+
+function getCached(): string {
+  try { return localStorage.getItem(LS_KEY) || FALLBACK; } catch { return FALLBACK; }
+}
 
 export default function CosmosCard() {
-  const [imageUrl, setImageUrl] = useState(FIRST_IMAGE);
+  // Render instantly from cache (no loading flash)
+  const [imageUrl, setImageUrl] = useState(getCached);
 
-  // Fetch in the background to get the actual latest image
   useEffect(() => {
+    // On every page load, fetch the latest — update display + cache if different
     fetchCosmosImages("yhnna", 1).then((imgs) => {
-      if (imgs[0]) setImageUrl(imgs[0]);
+      if (imgs[0] && imgs[0] !== imageUrl) {
+        setImageUrl(imgs[0]);
+        try { localStorage.setItem(LS_KEY, imgs[0]); } catch {}
+      }
     });
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <a href="https://cosmos.so/yhnna" target="_blank" rel="noopener noreferrer"
@@ -39,7 +47,7 @@ export default function CosmosCard() {
             objectFit: "cover",
             display: "block",
           }}
-          onError={() => setImageUrl(FIRST_IMAGE)}
+          onError={() => setImageUrl(FALLBACK)}
         />
 
         {/* Label overlay */}
