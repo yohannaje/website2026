@@ -22,23 +22,16 @@ export default function MapCard() {
       }}
     >
       {/* Your custom map image */}
-      {/* Centered logo */}
-      <div style={{
-        position: "absolute", inset: 0,
-        display: "flex", alignItems: "center", justifyContent: "center",
-        background: "var(--card)",
-      }}>
-        <img
-          src="/logo.svg"
-          alt="Córdoba, Spain"
-          style={{
-            width: "55%",
-            height: "55%",
-            objectFit: "contain",
-            display: "block",
-          }}
-        />
-      </div>
+      <img
+        src="/map.jpg"
+        alt="Córdoba, Spain"
+        style={{
+          position: "absolute", inset: 0,
+          width: "100%", height: "100%",
+          objectFit: "cover", objectPosition: "center",
+          display: "block",
+        }}
+      />
 
       {/* Location pill */}
       <div style={{

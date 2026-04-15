@@ -31,21 +31,22 @@ export async function fetchCosmosImages(username: string, limit = 20): Promise<s
       ...html.matchAll(/cdn\.cosmos\.so\/((?:images\/)?[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/g),
     ];
 
-    // Collect ALL non-avatar image paths first
+    // Collect content images only — those with the /images/ prefix.
+    // Cosmos page is ordered newest→oldest; no reversal needed.
+    // Images WITHOUT /images/ prefix are structural (cover/pinned) and are skipped.
     const seen = new Set<string>();
     const paths: string[] = [];
     for (const [, path] of matches) {
+      if (!path.startsWith("images/")) continue; // skip structural images
       const id = path.replace("images/", "");
       if (id === AVATAR_ID || seen.has(id)) continue;
       seen.add(id);
       paths.push(path);
+      if (paths.length >= limit) break;
     }
 
     if (paths.length === 0) return fallback();
-
-    // Page lists oldest→newest; reverse so index 0 = newest
-    const ordered = [...paths].reverse().slice(0, limit);
-    return ordered.map(cosmosUrl);
+    return paths.map(cosmosUrl);
   } catch {
     return fallback();
   }

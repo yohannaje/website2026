@@ -19,7 +19,7 @@ export default function BioCard() {
             Yoh
           </h1>
           <p style={{ fontSize: "0.75rem", color: "var(--muted)", marginTop: 3 }}>
-            Córdoba, Spain
+            Visual artist & designer
           </p>
         </div>
       </div>

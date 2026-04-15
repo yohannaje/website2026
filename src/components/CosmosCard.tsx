@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchCosmosImages, cosmosUrl } from "@/lib/cosmos";
 
-// Fallback image (torii gate — confirmed valid CDN URL)
+// Fallback = torii gate (confirmed latest upload, valid CDN URL with /images/ prefix)
 const FALLBACK = cosmosUrl("images/d7f54426-79ba-472b-b50b-3803ca149879");
 const LS_KEY = "cosmos_latest_url";
 
