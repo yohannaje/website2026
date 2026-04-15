@@ -9,6 +9,7 @@
   --radius: 20px;
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-serif: 'Instrument Serif', Georgia, serif;
+  --gap: 0.6rem;
 }
 
 html, body {
@@ -25,3 +26,43 @@ a { color: inherit; }
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* ── Page wrapper ── */
+.page-main {
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+}
+
+/* ── Bento grid ── */
+.bento-grid {
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 220px;
+}
+
+.s1 { grid-column: span 1; }
+.s2 { grid-column: span 2; }
+
+/* ── Mobile (≤ 600px) ── */
+@media (max-width: 600px) {
+  .page-main {
+    padding: 1rem 0.75rem 2rem;
+  }
+
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: auto;
+  }
+
+  /* Square image cells */
+  .cell-img {
+    aspect-ratio: 1 / 1;
+  }
+
+  /* Full-width content cells */
+  .cell-full {
+    grid-column: 1 / -1;
+  }
+}

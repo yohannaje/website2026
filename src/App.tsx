@@ -3,43 +3,30 @@ import BlogCard from "@/components/BlogCard";
 import CosmosCard from "@/components/CosmosCard";
 import MapCard from "@/components/MapCard";
 import ClockCard from "@/components/ClockCard";
+import GatosCard from "@/components/GatosCard";
 import ProjectCard from "@/components/ProjectCard";
 import { PROJECTS } from "@/data/projects";
 
-const cell = (col: number): React.CSSProperties => ({
-  gridColumn: `span ${col}`,
-});
-
 export default function App() {
   return (
-    <main style={{ maxWidth: 940, margin: "0 auto", padding: "2.5rem 1.25rem 5rem" }}>
+    <main className="page-main">
 
-      {/* ── Bento grid ── */}
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(4, 1fr)",
-        gridAutoRows: "minmax(200px, auto)",
-        gap: "0.6rem",
-      }}>
+      <div className="bento-grid">
         {/* Row 1: Bio(2) · Cosmos(1) · Map(1) */}
-        <div style={cell(2)}><BioCard /></div>
-        <div style={cell(1)}><CosmosCard /></div>
-        <div style={cell(1)}><MapCard /></div>
+        <div className="s2 cell-full"><BioCard /></div>
+        <div className="s1 cell-img"><CosmosCard /></div>
+        <div className="s1 cell-img"><MapCard /></div>
 
-        {/* Row 2: Blog(2) · Clock(1) · empty(1) */}
-        <div style={cell(2)}><BlogCard /></div>
-        <div style={cell(1)}><ClockCard /></div>
-        <div style={cell(1)} />
+        {/* Row 2: Blog(2) · Clock(1) · Gatos(1) */}
+        <div className="s2 cell-full"><BlogCard /></div>
+        <div className="s1 cell-img"><ClockCard /></div>
+        <div className="s1 cell-img"><GatosCard /></div>
 
         {/* Row 3: Project 1(2) · Project 2(2) */}
-        <div style={{ gridColumn: "1 / span 2" }}><ProjectCard {...PROJECTS[0]} /></div>
-        <div style={{ gridColumn: "3 / span 2" }}><ProjectCard {...PROJECTS[1]} /></div>
-
-        {/* Row 4: Project 3(2) */}
-        <div style={cell(2)}><ProjectCard {...PROJECTS[2]} /></div>
+        <div className="s2 cell-full"><ProjectCard {...PROJECTS[0]} /></div>
+        <div className="s2 cell-full"><ProjectCard {...PROJECTS[1]} /></div>
       </div>
 
-      {/* ── Footer ── */}
       <footer style={{
         marginTop: "3rem", paddingTop: "1.25rem",
         borderTop: "1px solid var(--border)",

@@ -19,10 +19,4 @@ export const PROJECTS: Project[] = [
     url: "https://example.com", // ← replace
     accent: "#eef1ff",
   },
-  {
-    name: "Image Distorter",
-    description: "Glitch, warp & distort images in real time",
-    url: "https://example.com", // ← replace
-    accent: "#fdeef4",
-  },
 ];

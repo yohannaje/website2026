@@ -7,6 +7,33 @@ export interface RssPost {
 }
 
 const SUBSTACK_BASE = "https://yhnn.substack.com";
+const CACHE_KEY = "blog_latest_post";
+const CACHE_TTL = 30 * 60 * 1000; // 30 minutes
+
+interface CacheEntry {
+  post: RssPost | null;
+  fetchedAt: number;
+}
+
+export function getCachedPost(): RssPost | null | undefined {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return undefined; // no cache at all
+    const entry: CacheEntry = JSON.parse(raw);
+    const age = Date.now() - entry.fetchedAt;
+    if (age > CACHE_TTL) return undefined; // stale
+    return entry.post;
+  } catch {
+    return undefined;
+  }
+}
+
+function setCachedPost(post: RssPost | null) {
+  try {
+    const entry: CacheEntry = { post, fetchedAt: Date.now() };
+    localStorage.setItem(CACHE_KEY, JSON.stringify(entry));
+  } catch {}
+}
 
 async function proxyFetch(url: string): Promise<string | null> {
   try {
@@ -73,11 +100,17 @@ export async function fetchLatestPost(): Promise<RssPost | null> {
     const feedXml = await proxyFetch(`${SUBSTACK_BASE}/feed`);
     if (feedXml) {
       const posts = parseRss(feedXml);
-      if (posts.length > 0) return posts[0];
+      if (posts.length > 0) {
+        setCachedPost(posts[0]);
+        return posts[0];
+      }
     }
     const archive = await fromArchive();
-    return archive[0] ?? null;
+    const result = archive[0] ?? null;
+    setCachedPost(result);
+    return result;
   } catch {
+    setCachedPost(null);
     return null;
   }
 }

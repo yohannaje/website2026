@@ -17,11 +17,9 @@ export default function MapCard() {
       style={{
         borderRadius: "var(--radius)", overflow: "hidden",
         position: "relative", cursor: "pointer",
-        height: "100%", minHeight: 200,
-        border: "1px solid var(--border)",
+        height: "100%",
       }}
     >
-      {/* Your custom map image */}
       <img
         src="/map.jpg"
         alt="Córdoba, Spain"
@@ -33,27 +31,26 @@ export default function MapCard() {
         }}
       />
 
-      {/* Location pill */}
       <div style={{
-        position: "absolute", inset: 0,
-        display: "flex", flexDirection: "column",
-        justifyContent: "flex-end", padding: "1rem",
-        background: "linear-gradient(to top, rgba(0,0,0,0.25) 0%, transparent 50%)",
-        pointerEvents: "none",
+        position: "absolute", bottom: 0, left: 0, right: 0,
+        padding: "2.5rem 0.9rem 0.9rem",
+        background: "linear-gradient(to top, rgba(0,0,0,0.35) 0%, transparent 100%)",
       }}>
-        <div style={{
-          display: "inline-flex", alignItems: "center", gap: 5,
-          background: "rgba(255,255,255,0.88)",
-          backdropFilter: "blur(8px)",
-          borderRadius: 24, padding: "5px 10px", width: "fit-content",
-        }}>
-          <svg width="11" height="13" viewBox="0 0 11 13" fill="none">
-            <path d="M5.5 0A4 4 0 001.5 4c0 3.5 4 8.5 4 8.5s4-5 4-8.5A4 4 0 005.5 0z" fill="#e03131"/>
-            <circle cx="5.5" cy="4" r="1.4" fill="white"/>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{
+            display: "inline-flex", alignItems: "center", gap: 5,
+            background: "rgba(255,255,255,0.88)",
+            backdropFilter: "blur(8px)",
+            borderRadius: 24, padding: "4px 9px",
+          }}>
+            <span style={{ fontSize: "0.75rem", lineHeight: 1 }}>📍</span>
+            <span style={{ fontSize: "0.65rem", fontWeight: 500, color: "#1c1c1a", letterSpacing: "0.01em" }}>
+              Córdoba, Spain
+            </span>
+          </div>
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" style={{ opacity: 0.75 }}>
+            <path d="M1.5 9.5L9.5 1.5M9.5 1.5H3.5M9.5 1.5v6" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          <span style={{ fontSize: "0.68rem", fontWeight: 500, color: "#1c1c1a", letterSpacing: "0.01em" }}>
-            Córdoba, Spain
-          </span>
         </div>
       </div>
     </div>
