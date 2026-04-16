@@ -6,7 +6,8 @@ import MapCard from "@/components/MapCard";
 import ClockCard from "@/components/ClockCard";
 import GatosCard from "@/components/GatosCard";
 import ArtCard from "@/components/ArtCard";
-import MusicCard from "@/components/MusicCard";
+import DosGatosCard from "@/components/DosGatosCard";
+import PuzzleCard from "@/components/PuzzleCard";
 import ProjectCard from "@/components/ProjectCard";
 import { PROJECTS } from "@/data/projects";
 
@@ -21,16 +22,17 @@ export default function App() {
         <div className="s1 cell-img"><CosmosCard /></div>
         <div className="s1 cell-img"><MapCard /></div>
 
-        {/* Row 2: Blog(2) · Clock(1) · Gatos(1) */}
-        <div className="s2 cell-full"><BlogCard /></div>
+        {/* Row 2: Clock(1) · Gatos(1) · Blog(2) */}
         <div className="s1 cell-img"><ClockCard /></div>
         <div className="s1 cell-img"><GatosCard /></div>
+        <div className="s2 cell-full"><BlogCard /></div>
 
-        {/* Row 3–4: Art(1 col, 2 rows) · Music(3 cols, 2 rows) */}
-        <div className="s1 r2 cell-art"><ArtCard /></div>
-        <div className="s3 r2"><MusicCard /></div>
+        {/* Row 3: Art(1) · DosGatos brand(2) · Puzzle(1) */}
+        <div className="s1 cell-img"><ArtCard /></div>
+        <div className="s2 cell-full"><DosGatosCard /></div>
+        <div className="s1 cell-img"><PuzzleCard /></div>
 
-        {/* Row 5: Project(2) · Project(2) */}
+        {/* Row 4: Project(2) · Project(2) */}
         <div className="s2 cell-full"><ProjectCard {...PROJECTS[0]} /></div>
         <div className="s2 cell-full"><ProjectCard {...PROJECTS[1]} /></div>
       </div>

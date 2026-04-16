@@ -7,35 +7,32 @@ export interface RssPost {
 }
 
 const SUBSTACK_BASE = "https://yhnn.substack.com";
-const CACHE_KEY = "blog_latest_post";
-const CACHE_TTL = 30 * 60 * 1000; // 30 minutes
+const CACHE_KEY = "blog_posts_v2";
+const CACHE_TTL = 30 * 60 * 1000;
 
 interface CacheEntry {
-  post: RssPost | null;
+  posts: RssPost[];
   fetchedAt: number;
 }
 
-export function getCachedPost(): RssPost | null | undefined {
+export function getCachedPosts(): RssPost[] | undefined {
   try {
     const raw = localStorage.getItem(CACHE_KEY);
-    if (!raw) return undefined; // no cache at all
+    if (!raw) return undefined;
     const entry: CacheEntry = JSON.parse(raw);
-    const age = Date.now() - entry.fetchedAt;
-    if (age > CACHE_TTL) return undefined; // stale
-    return entry.post;
+    if (Date.now() - entry.fetchedAt > CACHE_TTL) return undefined;
+    return entry.posts;
   } catch {
     return undefined;
   }
 }
 
-function setCachedPost(post: RssPost) {
+function setCachedPosts(posts: RssPost[]) {
   try {
-    const entry: CacheEntry = { post, fetchedAt: Date.now() };
-    localStorage.setItem(CACHE_KEY, JSON.stringify(entry));
+    localStorage.setItem(CACHE_KEY, JSON.stringify({ posts, fetchedAt: Date.now() }));
   } catch {}
 }
 
-// Multiple proxies — tries each in order until one succeeds
 const PROXIES: ((url: string) => string)[] = [
   (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
   (url) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
@@ -45,20 +42,16 @@ const PROXIES: ((url: string) => string)[] = [
 async function proxyFetch(url: string): Promise<string | null> {
   for (const proxy of PROXIES) {
     try {
-      const res = await fetch(proxy(url), {
-        signal: AbortSignal.timeout(6000),
-      });
+      const res = await fetch(proxy(url), { signal: AbortSignal.timeout(6000) });
       if (res.ok) return res.text();
-    } catch {
-      // try next proxy
-    }
+    } catch { /* try next */ }
   }
   return null;
 }
 
 function parseRss(xml: string): RssPost[] {
   const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)];
-  return items.slice(0, 4).map((m) => {
+  return items.slice(0, 3).map((m) => {
     const item = m[1];
     const title =
       item.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/)?.[1] ??
@@ -78,62 +71,41 @@ function parseRss(xml: string): RssPost[] {
 async function fromArchive(): Promise<RssPost[]> {
   const archiveHtml = await proxyFetch(`${SUBSTACK_BASE}/archive`);
   if (!archiveHtml) return [];
-
   const slugRe = new RegExp(`${SUBSTACK_BASE}/p/([^"?#/]+)`, "g");
-  const slugs = [...new Set([...archiveHtml.matchAll(slugRe)].map((m) => m[1]))].slice(0, 1);
-  if (!slugs.length) return [];
-
-  const postUrl = `${SUBSTACK_BASE}/p/${slugs[0]}`;
-  const postHtml = await proxyFetch(postUrl);
-  if (!postHtml) return [];
-
-  const og = (prop: string) =>
-    postHtml.match(new RegExp(`property="${prop}"\\s+content="([^"]+)"`))?.[1] ??
-    postHtml.match(new RegExp(`content="([^"]+)"\\s+property="${prop}"`))?.[1] ?? "";
-
-  const published =
-    postHtml.match(/property="article:published_time"\s+content="([^"]+)"/)?.[1] ?? "";
-
-  const title = og("og:title");
-  if (!title) return [];
-
-  return [{
-    title,
-    link: postUrl,
-    pubDate: published,
-    contentSnippet: og("og:description").slice(0, 160),
-    thumbnail: og("og:image") || undefined,
-  }];
+  const slugs = [...new Set([...archiveHtml.matchAll(slugRe)].map((m) => m[1]))].slice(0, 3);
+  const posts = await Promise.all(slugs.map(async (slug) => {
+    const postUrl = `${SUBSTACK_BASE}/p/${slug}`;
+    const html = await proxyFetch(postUrl);
+    if (!html) return null;
+    const og = (prop: string) =>
+      html.match(new RegExp(`property="${prop}"\\s+content="([^"]+)"`))?.[1] ??
+      html.match(new RegExp(`content="([^"]+)"\\s+property="${prop}"`))?.[1] ?? "";
+    const title = og("og:title");
+    if (!title) return null;
+    const published = html.match(/property="article:published_time"\s+content="([^"]+)"/)?.[1] ?? "";
+    return { title, link: postUrl, pubDate: published, contentSnippet: og("og:description").slice(0, 160) };
+  }));
+  return posts.filter(Boolean) as RssPost[];
 }
 
-export async function fetchLatestPost(): Promise<RssPost | null> {
+export async function fetchLatestPosts(): Promise<RssPost[]> {
   try {
     const feedXml = await proxyFetch(`${SUBSTACK_BASE}/feed`);
     if (feedXml) {
       const posts = parseRss(feedXml);
-      if (posts.length > 0) {
-        setCachedPost(posts[0]);
-        return posts[0];
-      }
+      if (posts.length > 0) { setCachedPosts(posts); return posts; }
     }
-    // RSS empty or failed — try archive scrape
     const archive = await fromArchive();
-    const result = archive[0] ?? null;
-    if (result) setCachedPost(result); // only cache real results, never cache failure
-    return result;
+    if (archive.length > 0) setCachedPosts(archive);
+    return archive;
   } catch {
-    // Don't cache failures — let it retry fresh next visit
-    return null;
+    return [];
   }
 }
 
 export function formatDate(dateStr: string): string {
   if (!dateStr) return "";
   try {
-    return new Date(dateStr).toLocaleDateString("en-US", {
-      month: "short", day: "numeric", year: "numeric",
-    });
-  } catch {
-    return "";
-  }
+    return new Date(dateStr).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  } catch { return ""; }
 }

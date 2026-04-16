@@ -15,7 +15,7 @@ export default function ProjectCard({ name, description, url, thumbnail, accent 
         onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = ""; (e.currentTarget as HTMLElement).style.boxShadow = ""; }}
       >
         {/* Preview area */}
-        <div style={{ flex: 1, background: accent, overflow: "hidden", position: "relative", minHeight: 130 }}>
+        <div style={{ flex: 1, background: accent, overflow: "hidden", position: "relative", minHeight: 90 }}>
           {thumbnail ? (
             <img src={thumbnail} alt={name} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }} />
           ) : (

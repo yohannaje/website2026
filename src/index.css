@@ -44,8 +44,6 @@ a { color: inherit; }
 
 .s1 { grid-column: span 1; }
 .s2 { grid-column: span 2; }
-.s3 { grid-column: span 3; }
-.r2 { grid-row: span 2; }
 
 /* ── Mobile (≤ 600px) ── */
 @media (max-width: 600px) {
@@ -55,7 +53,10 @@ a { color: inherit; }
 
   .bento-grid {
     grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: auto;
+    /* row height = column width → every cell is a perfect square or 2:1 rectangle */
+    grid-auto-rows: calc((100vw - 1.5rem - 0.6rem) / 2);
+    /* backfill holes so image pairs always sit side-by-side */
+    grid-auto-flow: row dense;
   }
 
   /* Square image cells */
@@ -66,21 +67,5 @@ a { color: inherit; }
   /* Full-width content cells (bio, blog, projects) */
   .cell-full {
     grid-column: 1 / -1;
-  }
-
-  /* Art card: full-width landscape on mobile */
-  .cell-art {
-    grid-column: 1 / -1;
-    aspect-ratio: 16 / 9;
-  }
-
-  /* Music + s3: always full width on mobile, natural height */
-  .s3 {
-    grid-column: 1 / -1;
-  }
-
-  /* Cancel row-span on mobile — each card is 1 row */
-  .r2 {
-    grid-row: span 1;
   }
 }
