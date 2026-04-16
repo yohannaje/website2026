@@ -17,7 +17,7 @@ export default function ProjectCard({ name, description, url, thumbnail, accent 
         {/* Preview area */}
         <div style={{ flex: 1, background: accent, overflow: "hidden", position: "relative", minHeight: 90 }}>
           {thumbnail ? (
-            <img src={thumbnail} alt={name} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }} />
+            <img src={thumbnail} alt={name} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }} />
           ) : (
             <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <div style={{ width: "75%", background: "white", borderRadius: 8, overflow: "hidden", boxShadow: "0 2px 12px rgba(0,0,0,0.09)" }}>

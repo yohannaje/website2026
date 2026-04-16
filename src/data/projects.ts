@@ -16,7 +16,8 @@ export const PROJECTS: Project[] = [
   {
     name: "Font Manager",
     description: "Organise, preview & test your typefaces",
-    url: "https://example.com", // ← replace
+    url: "https://font-grid-preview.pages.dev",
+    thumbnail: "/font.jpg",
     accent: "#eef1ff",
   },
 ];
