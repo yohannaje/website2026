@@ -28,21 +28,32 @@ export function getCachedPost(): RssPost | null | undefined {
   }
 }
 
-function setCachedPost(post: RssPost | null) {
+function setCachedPost(post: RssPost) {
   try {
     const entry: CacheEntry = { post, fetchedAt: Date.now() };
     localStorage.setItem(CACHE_KEY, JSON.stringify(entry));
   } catch {}
 }
 
+// Multiple proxies — tries each in order until one succeeds
+const PROXIES: ((url: string) => string)[] = [
+  (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+  (url) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+  (url) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+];
+
 async function proxyFetch(url: string): Promise<string | null> {
-  try {
-    const proxy = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
-    const res = await fetch(proxy);
-    return res.ok ? res.text() : null;
-  } catch {
-    return null;
+  for (const proxy of PROXIES) {
+    try {
+      const res = await fetch(proxy(url), {
+        signal: AbortSignal.timeout(6000),
+      });
+      if (res.ok) return res.text();
+    } catch {
+      // try next proxy
+    }
   }
+  return null;
 }
 
 function parseRss(xml: string): RssPost[] {
@@ -105,12 +116,13 @@ export async function fetchLatestPost(): Promise<RssPost | null> {
         return posts[0];
       }
     }
+    // RSS empty or failed — try archive scrape
     const archive = await fromArchive();
     const result = archive[0] ?? null;
-    setCachedPost(result);
+    if (result) setCachedPost(result); // only cache real results, never cache failure
     return result;
   } catch {
-    setCachedPost(null);
+    // Don't cache failures — let it retry fresh next visit
     return null;
   }
 }

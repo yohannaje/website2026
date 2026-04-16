@@ -1,0 +1,121 @@
+const SUBSTACK_BASE = "https://yhnn.substack.com";
+const CACHE_KEY = "blog_latest_post";
+const CACHE_TTL = 30 * 60 * 1000; // 30 minutes
+export function getCachedPost() {
+    try {
+        const raw = localStorage.getItem(CACHE_KEY);
+        if (!raw)
+            return undefined; // no cache at all
+        const entry = JSON.parse(raw);
+        const age = Date.now() - entry.fetchedAt;
+        if (age > CACHE_TTL)
+            return undefined; // stale
+        return entry.post;
+    }
+    catch {
+        return undefined;
+    }
+}
+function setCachedPost(post) {
+    try {
+        const entry = { post, fetchedAt: Date.now() };
+        localStorage.setItem(CACHE_KEY, JSON.stringify(entry));
+    }
+    catch { }
+}
+// Multiple proxies — tries each in order until one succeeds
+const PROXIES = [
+    (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+    (url) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+    (url) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+];
+async function proxyFetch(url) {
+    for (const proxy of PROXIES) {
+        try {
+            const res = await fetch(proxy(url), {
+                signal: AbortSignal.timeout(6000),
+            });
+            if (res.ok)
+                return res.text();
+        }
+        catch {
+            // try next proxy
+        }
+    }
+    return null;
+}
+function parseRss(xml) {
+    const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)];
+    return items.slice(0, 4).map((m) => {
+        const item = m[1];
+        const title = item.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/)?.[1] ??
+            item.match(/<title>(.*?)<\/title>/)?.[1] ?? "Untitled";
+        const link = item.match(/<link>(.*?)<\/link>/)?.[1] ??
+            item.match(/<guid[^>]*>(.*?)<\/guid>/)?.[1] ?? "#";
+        const pubDate = item.match(/<pubDate>(.*?)<\/pubDate>/)?.[1] ?? "";
+        const raw = item.match(/<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/)?.[1] ?? "";
+        const contentSnippet = raw.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().slice(0, 160);
+        const thumbnail = raw.match(/<img[^>]+src=["']([^"']+)["']/)?.[1];
+        return { title, link, pubDate, contentSnippet, thumbnail };
+    });
+}
+async function fromArchive() {
+    const archiveHtml = await proxyFetch(`${SUBSTACK_BASE}/archive`);
+    if (!archiveHtml)
+        return [];
+    const slugRe = new RegExp(`${SUBSTACK_BASE}/p/([^"?#/]+)`, "g");
+    const slugs = [...new Set([...archiveHtml.matchAll(slugRe)].map((m) => m[1]))].slice(0, 1);
+    if (!slugs.length)
+        return [];
+    const postUrl = `${SUBSTACK_BASE}/p/${slugs[0]}`;
+    const postHtml = await proxyFetch(postUrl);
+    if (!postHtml)
+        return [];
+    const og = (prop) => postHtml.match(new RegExp(`property="${prop}"\\s+content="([^"]+)"`))?.[1] ??
+        postHtml.match(new RegExp(`content="([^"]+)"\\s+property="${prop}"`))?.[1] ?? "";
+    const published = postHtml.match(/property="article:published_time"\s+content="([^"]+)"/)?.[1] ?? "";
+    const title = og("og:title");
+    if (!title)
+        return [];
+    return [{
+            title,
+            link: postUrl,
+            pubDate: published,
+            contentSnippet: og("og:description").slice(0, 160),
+            thumbnail: og("og:image") || undefined,
+        }];
+}
+export async function fetchLatestPost() {
+    try {
+        const feedXml = await proxyFetch(`${SUBSTACK_BASE}/feed`);
+        if (feedXml) {
+            const posts = parseRss(feedXml);
+            if (posts.length > 0) {
+                setCachedPost(posts[0]);
+                return posts[0];
+            }
+        }
+        // RSS empty or failed — try archive scrape
+        const archive = await fromArchive();
+        const result = archive[0] ?? null;
+        if (result)
+            setCachedPost(result); // only cache real results, never cache failure
+        return result;
+    }
+    catch {
+        // Don't cache failures — let it retry fresh next visit
+        return null;
+    }
+}
+export function formatDate(dateStr) {
+    if (!dateStr)
+        return "";
+    try {
+        return new Date(dateStr).toLocaleDateString("en-US", {
+            month: "short", day: "numeric", year: "numeric",
+        });
+    }
+    catch {
+        return "";
+    }
+}

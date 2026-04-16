@@ -1,15 +1,19 @@
+import Header from "@/components/Header";
 import BioCard from "@/components/BioCard";
 import BlogCard from "@/components/BlogCard";
 import CosmosCard from "@/components/CosmosCard";
 import MapCard from "@/components/MapCard";
 import ClockCard from "@/components/ClockCard";
 import GatosCard from "@/components/GatosCard";
+import ArtCard from "@/components/ArtCard";
+import MusicCard from "@/components/MusicCard";
 import ProjectCard from "@/components/ProjectCard";
 import { PROJECTS } from "@/data/projects";
 
 export default function App() {
   return (
     <main className="page-main">
+      <Header />
 
       <div className="bento-grid">
         {/* Row 1: Bio(2) · Cosmos(1) · Map(1) */}
@@ -22,7 +26,11 @@ export default function App() {
         <div className="s1 cell-img"><ClockCard /></div>
         <div className="s1 cell-img"><GatosCard /></div>
 
-        {/* Row 3: Project 1(2) · Project 2(2) */}
+        {/* Row 3–4: Art(1 col, 2 rows) · Music(3 cols, 2 rows) */}
+        <div className="s1 r2 cell-art"><ArtCard /></div>
+        <div className="s3 r2"><MusicCard /></div>
+
+        {/* Row 5: Project(2) · Project(2) */}
         <div className="s2 cell-full"><ProjectCard {...PROJECTS[0]} /></div>
         <div className="s2 cell-full"><ProjectCard {...PROJECTS[1]} /></div>
       </div>

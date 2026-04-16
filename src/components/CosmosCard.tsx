@@ -33,7 +33,6 @@ export default function CosmosCard() {
         cursor: "pointer",
         // Explicit height so the img fills it correctly
         height: "100%",
-        minHeight: 200,
         background: "#e8e1d8",
       }}>
         <img
