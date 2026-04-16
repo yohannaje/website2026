@@ -15,7 +15,7 @@ function PostRow({ post, placeholder }: { post?: RssPost; placeholder?: boolean 
   const inner = (
     <>
       <span style={{
-        fontFamily: "var(--font-serif)",
+        fontFamily: "var(--font-serif-reading)",
         fontSize: "0.92rem",
         color: placeholder ? "var(--muted)" : "var(--text)",
         overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
