@@ -29,13 +29,6 @@ export default function App() {
           />
         )}
         {tab === "about" && <ComingSoonPage label="About" />}
-
-        {tab === "home" && (
-          <footer className="site-footer">
-            <span>© {new Date().getFullYear()} Yoh</span>
-            <span>Córdoba, Spain</span>
-          </footer>
-        )}
       </main>
     </div>
   );
