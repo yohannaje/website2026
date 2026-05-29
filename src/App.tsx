@@ -1,50 +1,63 @@
-import Header from "@/components/Header";
+import { useState } from "react";
+import Sidebar, { type Tab } from "@/components/Sidebar";
 import BioCard from "@/components/BioCard";
-import BlogCard from "@/components/BlogCard";
+import PlaygroundCard from "@/components/PlaygroundCard";
 import CosmosCard from "@/components/CosmosCard";
 import MapCard from "@/components/MapCard";
 import ClockCard from "@/components/ClockCard";
 import GatosCard from "@/components/GatosCard";
-import ArtCard from "@/components/ArtCard";
-import DosGatosCard from "@/components/DosGatosCard";
 import PuzzleCard from "@/components/PuzzleCard";
-import ProjectCard from "@/components/ProjectCard";
-import { PROJECTS } from "@/data/projects";
+import InstagramCard from "@/components/InstagramCard";
+import WorkCard from "@/components/WorkCard";
+import IllustrationGallery from "@/components/IllustrationGallery";
+import ComingSoonPage from "@/components/ComingSoonPage";
 
 export default function App() {
+  const [tab, setTab] = useState<Tab>("home");
+
   return (
-    <main className="page-main">
-      <Header />
+    <div className="layout">
+      <Sidebar active={tab} onSelect={setTab} />
 
-      <div className="bento-grid">
-        {/* Row 1: Bio(2) · Cosmos(1) · Map(1) */}
-        <div className="s2 cell-full"><BioCard /></div>
-        <div className="s1 cell-img"><CosmosCard /></div>
-        <div className="s1 cell-img"><MapCard /></div>
+      <main className="content">
+        {tab === "home" && <HomeBento />}
+        {tab === "illustration" && <IllustrationGallery />}
+        {tab === "shop" && (
+          <ComingSoonPage
+            label="Shop"
+            sub="Limited-edition prints and originals will live here. Drop a note if you'd like to know when it opens."
+          />
+        )}
+        {tab === "about" && <ComingSoonPage label="About" />}
 
-        {/* Row 2: Clock(1) · Gatos(1) · Blog(2) */}
-        <div className="s1 cell-img"><ClockCard /></div>
-        <div className="s1 cell-img"><GatosCard /></div>
-        <div className="s2 cell-full"><BlogCard /></div>
+        {tab === "home" && (
+          <footer className="site-footer">
+            <span>© {new Date().getFullYear()} Yoh</span>
+            <span>Córdoba, Spain</span>
+          </footer>
+        )}
+      </main>
+    </div>
+  );
+}
 
-        {/* Row 3: Art(1) · DosGatos brand(2) · Puzzle(1) */}
-        <div className="s1 cell-img"><ArtCard /></div>
-        <div className="s2 cell-full"><DosGatosCard /></div>
-        <div className="s1 cell-img"><PuzzleCard /></div>
+function HomeBento() {
+  return (
+    <div className="bento-grid">
+      {/* Row 1: Bio(2) · Cosmos(1) · Map(1) */}
+      <div className="s2 cell-full"><BioCard /></div>
+      <div className="s1 cell-img"><CosmosCard /></div>
+      <div className="s1 cell-img"><MapCard /></div>
 
-        {/* Row 4: Project(2) · Project(2) */}
-        <div className="s2 cell-full"><ProjectCard {...PROJECTS[0]} /></div>
-        <div className="s2 cell-full"><ProjectCard {...PROJECTS[1]} /></div>
-      </div>
+      {/* Row 2: Clock(1) · Gatos(1) · Blog(2) */}
+      <div className="s1 cell-img"><ClockCard /></div>
+      <div className="s1 cell-img"><GatosCard /></div>
+      <div className="s2 cell-full"><PlaygroundCard /></div>
 
-      <footer style={{
-        marginTop: "3rem", paddingTop: "1.25rem",
-        borderTop: "1px solid var(--border)",
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-      }}>
-        <span style={{ fontSize: "0.72rem", color: "var(--muted)" }}>© {new Date().getFullYear()} Yoh</span>
-        <span style={{ fontSize: "0.72rem", color: "var(--muted)" }}>Córdoba, Spain</span>
-      </footer>
-    </main>
+      {/* Row 3: Instagram(1) · Work(2) · Puzzle(1) */}
+      <div className="s1 cell-img"><InstagramCard /></div>
+      <div className="s2 cell-full"><WorkCard /></div>
+      <div className="s1 cell-img"><PuzzleCard /></div>
+    </div>
   );
 }

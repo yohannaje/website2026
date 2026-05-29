@@ -11,6 +11,7 @@
   --font-serif: 'Instrument Serif', Georgia, serif;
   --font-serif-reading: 'PT Serif', Georgia, serif;
   --gap: 0.6rem;
+  --sidebar-w: 260px;
 }
 
 html, body {
@@ -24,15 +25,130 @@ html, body {
 
 a { color: inherit; }
 
+button { font-family: inherit; }
+
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
-/* ── Page wrapper ── */
-.page-main {
-  max-width: 940px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem 3rem;
+/* ── Layout: sidebar + content ── */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  padding: 3rem 2.25rem;
+}
+
+.sidebar-inner {
+  position: sticky;
+  top: 3rem;
+  height: calc(100vh - 6rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar-top {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.sidebar-logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--border);
+}
+
+.sidebar-brand-img {
+  width: 96px;
+  height: auto;
+  display: block;
+}
+
+.sidebar-bio {
+  font-family: var(--font-serif-reading);
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 220px;
+}
+
+.sidebar-bio::after {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--text);
+  margin-top: 1.25rem;
+  opacity: 0.5;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.sidebar-link {
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-decoration: none;
+  color: var(--text);
+  position: relative;
+  padding-left: 0.9rem;
+  transition: color 0.15s;
+}
+
+.sidebar-link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.sidebar-link.is-active::before {
+  content: '>';
+  opacity: 1;
+}
+
+.sidebar-link:hover {
+  color: var(--muted);
+}
+
+.sidebar-bottom {
+  display: flex;
+  gap: 0.9rem;
+}
+
+.sidebar-icon {
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  transition: color 0.15s;
+}
+
+.sidebar-icon:hover { color: var(--text); }
+
+/* ── Content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 2.5rem 2.5rem 3rem;
+  max-width: 1100px;
 }
 
 /* ── Bento grid ── */
@@ -46,27 +162,178 @@ a { color: inherit; }
 .s1 { grid-column: span 1; }
 .s2 { grid-column: span 2; }
 
-/* ── Mobile (≤ 600px) ── */
-@media (max-width: 600px) {
-  .page-main {
+/* ── Illustration masonry ── */
+.masonry {
+  column-count: 2;
+  column-gap: 1.5rem;
+}
+
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: 1.5rem;
+  cursor: zoom-in;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.masonry-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.masonry-item:hover img {
+  transform: scale(1.02);
+}
+
+/* ── About page ── */
+.about-page {
+  max-width: 600px;
+  padding-top: 1rem;
+}
+
+.about-heading {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 2rem;
+  font-weight: 400;
+  margin-bottom: 1.75rem;
+}
+
+.about-body p {
+  font-family: var(--font-serif-reading);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  margin-bottom: 1.1rem;
+  color: var(--text);
+}
+
+.about-contact {
+  margin-top: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.about-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  text-decoration: none;
+  color: var(--text);
+  font-size: 0.9rem;
+  transition: color 0.15s;
+}
+
+.about-link:hover { color: var(--muted); }
+
+/* ── Shop page ── */
+.shop-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+.shop-inner {
+  text-align: center;
+  max-width: 380px;
+}
+
+.shop-eyebrow {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+
+.shop-title {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 2.4rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+.shop-sub {
+  font-family: var(--font-serif-reading);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+.shop-link {
+  font-size: 0.85rem;
+  text-decoration: none;
+  color: var(--text);
+  border-bottom: 1px solid var(--text);
+  padding-bottom: 2px;
+  transition: opacity 0.15s;
+}
+
+.shop-link:hover { opacity: 0.6; }
+
+/* ── Footer ── */
+.site-footer {
+  margin-top: 3rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+/* ── Mobile ── */
+@media (max-width: 820px) {
+  .layout { flex-direction: column; }
+
+  .sidebar {
+    width: 100%;
+    padding: 1.5rem 1.25rem 0.5rem;
+  }
+
+  .sidebar-inner {
+    position: static;
+    height: auto;
+  }
+
+  .sidebar-bio { display: none; }
+
+  .sidebar-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin-top: 1rem;
+  }
+
+  .sidebar-bottom {
+    position: absolute;
+    top: 1.75rem;
+    right: 1.25rem;
+  }
+
+  .sidebar-top {
+    gap: 0.75rem;
+  }
+
+  .content {
     padding: 1.25rem 0.75rem 2rem;
+    max-width: 100%;
   }
 
   .bento-grid {
     grid-template-columns: repeat(2, 1fr);
-    /* row height = column width → every cell is a perfect square or 2:1 rectangle */
     grid-auto-rows: calc((100vw - 1.5rem - 0.6rem) / 2);
-    /* backfill holes so image pairs always sit side-by-side */
     grid-auto-flow: row dense;
   }
 
-  /* Square image cells */
-  .cell-img {
-    aspect-ratio: 1 / 1;
-  }
+  .cell-img { aspect-ratio: 1 / 1; }
+  .cell-full { grid-column: 1 / -1; }
 
-  /* Full-width content cells (bio, blog, projects) */
-  .cell-full {
-    grid-column: 1 / -1;
-  }
+  .masonry { column-count: 1; }
 }
