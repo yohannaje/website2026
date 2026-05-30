@@ -17,6 +17,9 @@ const IMAGES = [
   "https://ik.imagekit.io/yhnn/Untitled_Artwork%2010.jpg?updatedAt=1777753212590",
   "https://ik.imagekit.io/yhnn/aa.jpg",
   "https://ik.imagekit.io/yhnn/a.jpg",
+  "https://ik.imagekit.io/yhnn/Instagram%20post%20-%201.jpg",
+  "https://ik.imagekit.io/yhnn/a3-print.jpg",
+  "https://ik.imagekit.io/yhnn/Untitled_Artwork.jpg",
 ];
 
 export default function IllustrationGallery() {
