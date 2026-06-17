@@ -4,7 +4,6 @@ const PROJECTS = [
   { title: "Pocket Zine", url: "https://pocketzine.app", logo: "/pocketzine.svg" },
   { title: "Dos Gatos Press", url: "https://www.dosgatos.press", logo: "/dosgatos.svg" },
   { title: "GIF Maker", url: "https://yohannaje.github.io/gifmaker/", logo: "/gifmaker.svg" },
-  { title: "Font Manager", url: null },
 ];
 
 const Arrow = () => (
@@ -18,19 +17,21 @@ const Arrow = () => (
 function Row({ project }: { project: typeof PROJECTS[number] }) {
   const inner = (
     <>
-      {project.logo && (
+      {project.logo ? (
         <img src={project.logo} alt={project.title}
-          style={{ height: 18, width: "auto", flexShrink: 0, filter: "var(--logo-filter, none)" }} />
+          style={{ height: 24, width: "auto", flexShrink: 0 }} />
+      ) : (
+        <span style={{
+          fontFamily: "var(--font-serif-reading)",
+          fontSize: "0.92rem",
+          color: "var(--text)",
+          overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+          flex: 1,
+        }}>
+          {project.title}
+        </span>
       )}
-      <span style={{
-        fontFamily: "var(--font-serif-reading)",
-        fontSize: "0.92rem",
-        color: "var(--text)",
-        overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
-        flex: 1,
-      }}>
-        {project.title}
-      </span>
+      {project.logo && <span style={{ flex: 1 }} />}
       {project.url ? <Arrow /> : (
         <span style={{
           fontSize: "0.65rem",
@@ -76,7 +77,7 @@ export default function PlaygroundCard() {
       background: "var(--card)", border: "1px solid var(--border)",
       borderRadius: "var(--radius)", overflow: "hidden",
       display: "flex", flexDirection: "column",
-      minHeight: ROW_H * 4 + 3 + 38,
+      minHeight: ROW_H * 3 + 2 + 38,
     }}>
       {PROJECTS.map((p, i) => (
         <div key={p.title}>
@@ -95,7 +96,7 @@ export default function PlaygroundCard() {
           fontSize: "0.6rem", color: "var(--muted)",
           letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 500,
         }}>
-          Playground Projects
+          Active Projects
         </span>
         <span style={{ fontSize: "0.68rem", color: "var(--muted)" }}>
           2024–2026
