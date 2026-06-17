@@ -1,7 +1,7 @@
 const ROW_H = 58;
 
 const PROJECTS = [
-  { title: "Pocket Zine", url: "https://pocketzine.app", logo: "/pocketzine.svg" },
+  { title: "Pocket Zine", url: "https://pocketzineclub.com", logo: "/pocketzine.svg" },
   { title: "Dos Gatos Press", url: "https://www.dosgatos.press", logo: "/dosgatos.svg" },
   { title: "GIF Maker", url: "https://yohannaje.github.io/gifmaker/", logo: "/gifmaker.svg" },
 ];
