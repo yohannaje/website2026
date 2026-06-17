@@ -1,9 +1,10 @@
 const ROW_H = 58;
 
 const PROJECTS = [
-  { title: "Zine editor", url: "https://zineeditor.pages.dev/" },
+  { title: "Pocket Zine", url: "https://pocketzine.app", logo: "/pocketzine.svg" },
+  { title: "Dos Gatos Press", url: "https://www.dosgatos.press", logo: "/dosgatos.svg" },
+  { title: "GIF Maker", url: "https://yohannaje.github.io/gifmaker/", logo: "/gifmaker.svg" },
   { title: "Font Manager", url: null },
-  { title: "Dos Gatos Press", url: "https://dosgatos.press" },
 ];
 
 const Arrow = () => (
@@ -17,6 +18,10 @@ const Arrow = () => (
 function Row({ project }: { project: typeof PROJECTS[number] }) {
   const inner = (
     <>
+      {project.logo && (
+        <img src={project.logo} alt={project.title}
+          style={{ height: 18, width: "auto", flexShrink: 0, filter: "var(--logo-filter, none)" }} />
+      )}
       <span style={{
         fontFamily: "var(--font-serif-reading)",
         fontSize: "0.92rem",
@@ -71,7 +76,7 @@ export default function PlaygroundCard() {
       background: "var(--card)", border: "1px solid var(--border)",
       borderRadius: "var(--radius)", overflow: "hidden",
       display: "flex", flexDirection: "column",
-      minHeight: ROW_H * 3 + 2 + 38,
+      minHeight: ROW_H * 4 + 3 + 38,
     }}>
       {PROJECTS.map((p, i) => (
         <div key={p.title}>
