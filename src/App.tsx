@@ -13,14 +13,13 @@ import IllustrationGallery from "@/components/IllustrationGallery";
 import ComingSoonPage from "@/components/ComingSoonPage";
 
 export default function App() {
-  const [tab, setTab] = useState<Tab>("home");
+  const [tab, setTab] = useState<Tab>("illustration");
 
   return (
     <div className="layout">
       <Sidebar active={tab} onSelect={setTab} />
 
       <main className="content">
-        {tab === "home" && <HomeBento />}
         {tab === "illustration" && <IllustrationGallery />}
         {tab === "shop" && (
           <ComingSoonPage
@@ -28,13 +27,13 @@ export default function App() {
             sub="Limited-edition prints and originals will live here. Drop a note if you'd like to know when it opens."
           />
         )}
-        {tab === "about" && <ComingSoonPage label="About" />}
+        {tab === "about" && <AboutBento />}
       </main>
     </div>
   );
 }
 
-function HomeBento() {
+function AboutBento() {
   return (
     <div className="bento-grid">
       {/* Row 1: Bio(2) · Cosmos(1) · Map(1) */}

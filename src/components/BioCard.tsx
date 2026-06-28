@@ -13,7 +13,7 @@ export default function BioCard() {
         color: "var(--text)",
         maxWidth: 380,
       }}>
-        Designer, maker, and visual artist chasing movement and shape. Fueled by 🇦🇷 mate, bouldering, soaking up the sun and two cats who definitely run the studio.
+        Welcome to my digital garden — a space to share who I am and some of the things I do.
       </p>
     </div>
   );

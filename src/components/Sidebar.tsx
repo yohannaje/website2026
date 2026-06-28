@@ -1,6 +1,6 @@
 import { Envelope, InstagramLogo } from "@phosphor-icons/react";
 
-export type Tab = "home" | "illustration" | "shop" | "about";
+export type Tab = "illustration" | "shop" | "about";
 
 interface Props {
   active: Tab;
@@ -8,8 +8,7 @@ interface Props {
 }
 
 const TABS: { id: Tab; label: string }[] = [
-  { id: "home", label: "Home" },
-  { id: "illustration", label: "Illustration" },
+  { id: "illustration", label: "Home" },
   { id: "shop", label: "Shop" },
   { id: "about", label: "About" },
 ];
@@ -30,8 +29,9 @@ export default function Sidebar({ active, onSelect }: Props) {
           <img src="/logo.png" alt="YHNN" className="sidebar-brand-img" />
 
           <p className="sidebar-bio">
-            Welcome to my digital garden — a space to share who I am and some
-            of the things I do.
+            Designer, maker, and visual artist chasing movement and shape.
+            Fueled by 🇦🇷 mate, bouldering, soaking up the sun and two cats
+            who definitely run the studio.
           </p>
 
           <nav className="sidebar-nav">

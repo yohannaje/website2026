@@ -1,28 +1,15 @@
 import { useEffect, useState } from "react";
 
 const IMAGES = [
-  "https://ik.imagekit.io/yhnn/Untitled_Artwork%209_GfOQK2Pk0M.jpg",
-  "https://ik.imagekit.io/yhnn/Untitled_Artwork%2013.jpg",
-  "https://ik.imagekit.io/yhnn/Untitled_Artwork%207_xnu-ZIf3i.jpg",
-  "https://ik.imagekit.io/yhnn/Untitled_Artwork%207.jpg?updatedAt=1777753384836",
+  "https://ik.imagekit.io/yhnn/Untitled_Artwork%209_GfOQK2Pk0M.jpg?updatedAt=1782476960027",
+  "https://ik.imagekit.io/yhnn/Untitled_Artwork%2013.jpg?updatedAt=1782476959998",
+  "https://ik.imagekit.io/yhnn/Untitled_Artwork%207_xnu-ZIf3i.jpg?updatedAt=1782476959967",
+  "https://ik.imagekit.io/yhnn/aaa.jpg?updatedAt=1780083381853",
   "https://ik.imagekit.io/yhnn/IMG_0830.JPG?updatedAt=1775643819793",
-  "https://ik.imagekit.io/yhnn/Untitled_Artwork%2011.jpg?updatedAt=1777753212524",
-  "https://ik.imagekit.io/yhnn/cccc.jpg",
-  "https://ik.imagekit.io/yhnn/Untitled_Artwork%208.jpg?updatedAt=1777753212325",
-  "https://ik.imagekit.io/yhnn/Untitled_Artwork%204.jpg?updatedAt=1777753132043",
   "https://ik.imagekit.io/yhnn/chinese.jpg?updatedAt=1777387003663",
-  "https://ik.imagekit.io/yhnn/Untitled_Artwork%2012.jpg?updatedAt=1777753212567",
-  "https://ik.imagekit.io/yhnn/aaaaaa.jpg",
-  "https://ik.imagekit.io/yhnn/Untitled_Artwork%20copy.jpg?updatedAt=1777753212393",
-  "https://ik.imagekit.io/yhnn/aaa.jpg",
-  "https://ik.imagekit.io/yhnn/Untitled_Artwork%20101.jpg?updatedAt=1777754106875",
-  "https://ik.imagekit.io/yhnn/Untitled_Artwork%2011.jpg?updatedAt=1777753212524",
-  "https://ik.imagekit.io/yhnn/Untitled_Artwork%2010.jpg?updatedAt=1777753212590",
-  "https://ik.imagekit.io/yhnn/aa.jpg",
-  "https://ik.imagekit.io/yhnn/a.jpg",
-  "https://ik.imagekit.io/yhnn/Instagram%20post%20-%201.jpg",
-  "https://ik.imagekit.io/yhnn/a3-print.jpg",
-  "https://ik.imagekit.io/yhnn/Untitled_Artwork.jpg",
+  "https://ik.imagekit.io/yhnn/Untitled_Artwork.jpg?updatedAt=1780083464863",
+  "https://ik.imagekit.io/yhnn/aaaaaa.jpg?updatedAt=1780083381903",
+  "https://ik.imagekit.io/yhnn/cccc.jpg?updatedAt=1780083381636",
 ];
 
 export default function IllustrationGallery() {
