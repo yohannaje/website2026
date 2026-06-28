@@ -166,9 +166,16 @@ button { font-family: inherit; }
 
 /* ── Illustration masonry ── */
 .masonry {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
   gap: 1.5rem;
+}
+
+.masonry-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  flex: 1;
+  min-width: 0;
 }
 
 .masonry-item {
@@ -352,7 +359,6 @@ button { font-family: inherit; }
     height: auto !important;
   }
 
-  .masonry { grid-template-columns: 1fr; }
 }
 
 /* ── Riso simulator ── */

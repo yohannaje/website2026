@@ -13,8 +13,23 @@ const IMAGES = [
   "https://ik.imagekit.io/yhnn/cccc.jpg?updatedAt=1780083381636",
 ];
 
+function useColumnCount() {
+  const [cols, setCols] = useState(() =>
+    typeof window !== "undefined" && window.innerWidth <= 820 ? 1 : 2
+  );
+
+  useEffect(() => {
+    const update = () => setCols(window.innerWidth <= 820 ? 1 : 2);
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  return cols;
+}
+
 export default function IllustrationGallery() {
   const [lightbox, setLightbox] = useState<number | null>(null);
+  const cols = useColumnCount();
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -27,12 +42,21 @@ export default function IllustrationGallery() {
     return () => window.removeEventListener("keydown", handler);
   }, [lightbox]);
 
+  // distribute round-robin into columns so each column packs tightly by its
+  // own content height, while reading order across columns stays sequential
+  const columns: { src: string; index: number }[][] = Array.from({ length: cols }, () => []);
+  IMAGES.forEach((src, i) => columns[i % cols].push({ src, index: i }));
+
   return (
     <section>
       <div className="masonry">
-        {IMAGES.map((src, i) => (
-          <div key={src} className="masonry-item" onClick={() => setLightbox(i)}>
-            <img src={src} alt={`Illustration ${i + 1}`} loading="lazy" />
+        {columns.map((col, ci) => (
+          <div className="masonry-col" key={ci}>
+            {col.map(({ src, index }) => (
+              <div key={src} className="masonry-item" onClick={() => setLightbox(index)}>
+                <img src={src} alt={`Illustration ${index + 1}`} loading="lazy" />
+              </div>
+            ))}
           </div>
         ))}
       </div>
