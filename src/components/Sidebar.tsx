@@ -29,9 +29,9 @@ export default function Sidebar({ active, onSelect }: Props) {
           <img src="/logo.png" alt="YHNN" className="sidebar-brand-img" />
 
           <p className="sidebar-bio">
-            Designer, maker, and visual artist chasing movement and shape.
-            Fueled by 🇦🇷 mate, bouldering, soaking up the sun and two cats
-            who definitely run the studio.
+            Visual artist & designer chasing movement and shape. Fueled by
+            🇦🇷 mate, bouldering, soaking up the sun and two cats who
+            definitely run the studio.
           </p>
 
           <nav className="sidebar-nav">
