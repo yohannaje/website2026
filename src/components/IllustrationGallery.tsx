@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 
 const IMAGES = [
+  "https://ik.imagekit.io/yhnn/Untitled_Artwork%2011_4NsxVl7qz.jpg",
+  "https://ik.imagekit.io/yhnn/Untitled_Artwork%2010_CUfUOJWVqB.jpg",
+  "https://ik.imagekit.io/yhnn/Untitled_Artwork%208_GwmGtCKUJ.jpg",
   "https://ik.imagekit.io/yhnn/Untitled_Artwork%209_GfOQK2Pk0M.jpg?updatedAt=1782476960027",
   "https://ik.imagekit.io/yhnn/Untitled_Artwork%2013.jpg?updatedAt=1782476959998",
   "https://ik.imagekit.io/yhnn/Untitled_Artwork%207_xnu-ZIf3i.jpg?updatedAt=1782476959967",
