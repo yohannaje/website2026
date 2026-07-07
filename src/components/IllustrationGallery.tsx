@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 
 const IMAGES = [
-  "https://ik.imagekit.io/yhnn/Untitled_Artwork%201.jpg",
-  "https://ik.imagekit.io/yhnn/Untitled_Artwork%2011_4NsxVl7qz.jpg",
-  "https://ik.imagekit.io/yhnn/Untitled_Artwork%2010_CUfUOJWVqB.jpg",
-  "https://ik.imagekit.io/yhnn/Untitled_Artwork%2014.jpg",
-  "https://ik.imagekit.io/yhnn/Untitled_Artwork%208_GwmGtCKUJ.jpg",
-  "https://ik.imagekit.io/yhnn/Untitled_Artwork%2012_UB8Y8MOGO.jpg",
+  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%205.jpg",
+  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%204.jpg",
+  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%203.jpg",
+  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%201.jpg",
 ];
 
 function useColumnCount() {
