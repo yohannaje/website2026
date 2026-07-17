@@ -175,17 +175,34 @@ button { font-family: inherit; }
   color: var(--muted);
 }
 
-.about-bio-block + .about-bio-block {
-  margin-top: 3rem;
+.about-bio-langs {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
 .about-bio-lang {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
   font-size: 0.7rem;
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.18em;
   color: var(--muted);
-  margin-bottom: 1rem;
+  transition: color 0.15s;
+}
+
+.about-bio-lang:hover,
+.about-bio-lang.is-active {
+  color: var(--text);
+}
+
+.about-bio-sep {
+  color: var(--muted);
+  font-size: 0.7rem;
+  margin: 0 0.5rem;
 }
 
 .about-bio p {
@@ -197,6 +214,21 @@ button { font-family: inherit; }
 
 .about-bio p + p {
   margin-top: 1.1rem;
+}
+
+.about-bio-mail {
+  display: inline-block;
+  margin-top: 1.5rem;
+  font-family: var(--font-serif-reading);
+  font-size: 1.05rem;
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  transition: border-color 0.15s;
+}
+
+.about-bio-mail:hover {
+  border-bottom-color: var(--text);
 }
 
 .about-heading {
