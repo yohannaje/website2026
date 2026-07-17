@@ -1,19 +1,30 @@
 import { useEffect, useState } from "react";
 
 const IMAGES = [
-  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%207.jpg",
-  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%204.jpg",
-  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%208.jpg",
-  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%201.jpg",
+  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%207.jpg?updatedAt=1783421086450",
+  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%202.jpg",
+  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%206.jpg",
+  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%204_VshU1ZHVDc.jpg",
+  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%201.jpg?updatedAt=1783332263880",
+  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%205.jpg",
+  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%201_CegMfPKDB.jpg",
+  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%203.jpg",
+  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%207_rgox43guk.jpg",
 ];
+
+function columnsFor(width: number) {
+  if (width <= 640) return 1;
+  if (width <= 980) return 2;
+  return 3;
+}
 
 function useColumnCount() {
   const [cols, setCols] = useState(() =>
-    typeof window !== "undefined" && window.innerWidth <= 820 ? 1 : 2
+    typeof window !== "undefined" ? columnsFor(window.innerWidth) : 3
   );
 
   useEffect(() => {
-    const update = () => setCols(window.innerWidth <= 820 ? 1 : 2);
+    const update = () => setCols(columnsFor(window.innerWidth));
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, []);

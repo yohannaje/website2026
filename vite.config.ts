@@ -10,4 +10,12 @@ export default defineConfig({
     },
     dedupe: ["react", "react-dom"],
   },
+  build: {
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, "index.html"),
+        riso: path.resolve(__dirname, "riso.html"),
+      },
+    },
+  },
 });
