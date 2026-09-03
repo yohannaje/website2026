@@ -1,21 +1,22 @@
 import { useEffect, useState } from "react";
 
 const IMAGES = [
+  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%201.jpg",
+  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%2011.jpg",
   "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%207.jpg?updatedAt=1783421086450",
-  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%202.jpg",
-  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%206.jpg",
-  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%204_VshU1ZHVDc.jpg",
-  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%201.jpg?updatedAt=1783332263880",
-  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%205.jpg",
-  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%201_CegMfPKDB.jpg",
-  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%203.jpg",
-  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%207_rgox43guk.jpg",
+  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%201_07Ka7xVpf.jpg",
+  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%2016.jpg",
+  "https://ik.imagekit.io/yhnn/Untitled_Artwork%201_T7cyqCmam.jpg",
+  "https://ik.imagekit.io/yhnn/Untitled_Artwork%205.jpg",
+  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%2014.jpg",
+  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1.jpg",
+  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%2013.jpg",
+  "https://ik.imagekit.io/yhnn/Untitled_Artwork%203.jpg",
 ];
 
 function columnsFor(width: number) {
   if (width <= 640) return 1;
-  if (width <= 980) return 2;
-  return 3;
+  return 2;
 }
 
 function useColumnCount() {
@@ -58,7 +59,7 @@ export default function IllustrationGallery() {
         {columns.map((col, ci) => (
           <div className="masonry-col" key={ci}>
             {col.map(({ src, index }) => (
-              <div key={src} className="masonry-item" onClick={() => setLightbox(index)}>
+              <div key={index} className="masonry-item" onClick={() => setLightbox(index)}>
                 <img src={src} alt={`Illustration ${index + 1}`} loading="lazy" />
               </div>
             ))}
