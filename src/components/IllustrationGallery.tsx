@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 const IMAGES = [
   "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%201.jpg",
+  "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%203.jpg",
   "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%2011.jpg",
   "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%207.jpg?updatedAt=1783421086450",
   "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%201_07Ka7xVpf.jpg",
