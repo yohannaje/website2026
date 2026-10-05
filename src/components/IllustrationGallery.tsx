@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 const IMAGES = [
   "https://ik.imagekit.io/yhnn/cosmos.jpg",
   "https://ik.imagekit.io/yhnn/donnie%2010.jpg",
+  "https://ik.imagekit.io/yhnn/spring12.JPG",
   "https://ik.imagekit.io/yhnn/buni.jpg",
   "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%201.jpg",
   "https://ik.imagekit.io/yhnn/Riviera_Rough_Paper_Texture_24v1%203.jpg",
