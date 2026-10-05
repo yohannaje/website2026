@@ -47,7 +47,7 @@ export default function Topbar({ active, onSelect }: Props) {
           target="_blank"
           rel="noopener noreferrer"
           className="topbar-link"
-          title="@y.h.n.n"
+          title="@by_yhnn"
         >
           IG
         </a>
