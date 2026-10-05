@@ -43,7 +43,7 @@ export default function Topbar({ active, onSelect }: Props) {
 
       <div className="topbar-meta">
         <a
-          href="https://instagram.com/y.h.n.n"
+          href="https://instagram.com/by_yhnn"
           target="_blank"
           rel="noopener noreferrer"
           className="topbar-link"
