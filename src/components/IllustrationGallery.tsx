@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 
 const IMAGES = [
+  "https://ik.imagekit.io/yhnn/change.jpg?updatedAt=1792574349860",
+  "https://ik.imagekit.io/yhnn/Untitled_Artwork%2018.jpg?updatedAt=1792574349602",
   "https://ik.imagekit.io/yhnn/cosmos.jpg",
   "https://ik.imagekit.io/yhnn/donnie%2010.jpg",
   "https://ik.imagekit.io/yhnn/spring12.JPG",
