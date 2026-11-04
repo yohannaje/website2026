@@ -1,11 +1,9 @@
 # dependencies
 node_modules/
 
-# build output (Cloudflare builds this itself)
+# build output (npm run build copies site/ here)
 dist/
 
-# compiled JS (Vite handles TS — tsc is type-check only)
-src/**/*.js
 
 # misc
 .DS_Store
