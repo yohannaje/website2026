@@ -28,5 +28,5 @@ Cloudflare Pages, desde `main`. El build (`npm run build`) solo copia `site/` a 
 
 ## Historia
 
-La versión bento (reloj, mapa, música, cosmos, etc.) quedó en la rama `archive/bento-2026`.
+La versión bento (reloj, mapa, música, cosmos, etc.) está en el historial de git (commit `5334c1d`, 7 jul 2026).
 El simulador riso que vivía en `/riso.html` ahora es su propio repo.
