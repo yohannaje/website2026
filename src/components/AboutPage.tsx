@@ -33,7 +33,10 @@ export default function AboutPage() {
   return (
     <div className="about-split">
       <div className="about-photo">
-        <span className="about-photo-note">Foto</span>
+        <img
+          src="https://ik.imagekit.io/yhnn/5EADD601-6108-40A4-A9A3-9BE1BD95E42F.JPEG?tr=w-1200"
+          alt="Yohanna en su estudio"
+        />
       </div>
 
       <div className="about-bio">
